@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  scoir-login-server:
+    build: ./server
+    ports: 
+      - 8000:8000
+    restart: unless-stopped
+    network_mode: host
+  scoir-login-client:
+    build: ./client
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    network_mode: host
