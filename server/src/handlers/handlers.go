@@ -27,7 +27,7 @@ func Authenticate(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	creds, ok := value.(models.Credentials)
+	creds, ok := value.(*models.Credentials)
 	if !ok {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -60,20 +60,7 @@ func Authenticate(w http.ResponseWriter, req *http.Request) {
 	})
 }
 
-func EnableCORS(next http.HandlerFunc) http.HandlerFunc {
-	return func(w http.ResponseWriter, req *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-		// handle preflight
-		if req.Method == "OPTIONS" {
-			return
-		}
-		next(w, req)
-	}
-}
-
-func decodeJSONBody(req *http.Request, value any) (any, error) {
+func decodeJSONBody(req *http.Request, value interface{}) (interface{}, error) {
 	contentType := req.Header.Get("Content-Type")
 	if contentType != applicationJSON {
 		err := fmt.Errorf("Expected Content-Type "+applicationJSON+" but found %s", contentType)
@@ -81,8 +68,8 @@ func decodeJSONBody(req *http.Request, value any) (any, error) {
 	}
 	decoder := json.NewDecoder(req.Body)
 	decoder.DisallowUnknownFields()
-	if err := decoder.Decode(&value); err != nil {
+	if err := decoder.Decode(value); err != nil {
 		return nil, err
 	}
-	return &value, nil
+	return value, nil
 }

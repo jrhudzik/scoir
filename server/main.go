@@ -4,6 +4,8 @@ import (
 	"jhudzik/login/src/handlers"
 	"log"
 	"net/http"
+
+	"github.com/rs/cors"
 )
 
 // do some basic setup
@@ -13,7 +15,7 @@ func init() {
 
 func main() {
 	mux := http.NewServeMux()
-	// mux.Handle("/", http.HandlerFunc(handlers.EnableCORS))
-	mux.Handle("/login", handlers.EnableCORS(http.HandlerFunc(handlers.Authenticate)))
-	log.Fatal(http.ListenAndServe(":8000", mux))
+	mux.Handle("/login", http.HandlerFunc(handlers.Authenticate))
+	handler := cors.Default().Handler(mux)
+	log.Fatal(http.ListenAndServe(":8000", handler))
 }
