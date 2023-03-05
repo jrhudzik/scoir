@@ -1,33 +1,17 @@
 import { useState } from 'react'
 import { Alert, Box, Typography } from '@mui/material'
 
+import { login } from '../api'
 import LoginForm from './LoginForm'
 
 const LoginPage = () => {
 
     const [loginResponse, setLoginResponse] = useState(null)
-
-    const handleSubmit = async (username, password) => {
-        try {
-            const res = await fetch('http://localhost:8000/login', {
-                body: JSON.stringify({
-                    Username: username, 
-                    Password: password
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                method: 'POST',
-                mode: 'cors'
-            })
-            const data = await res.json()            
-            // normally the application would be redirecting, but for demo we'll show a message on same page
-            setLoginResponse({msg: data.Msg, severity: res.status === 200 ? 'success' : 'error'})
-        } catch(e) {
-            // we'd do something to handle error and give user feedback
-        }
+    
+    const handleSubmit = (username, password) => {
+        const {data, status} = login(username, password)         
+        setLoginResponse({msg: data.Msg, severity: status === 200 ? 'success' : 'error'})
     }
-
 
     return (
         <Box
