@@ -1,6 +1,7 @@
+const API_BASE_URL = 'http://localhost:8000'
 
-const BASE_API_URL = process.env.REACT_APP_BASE_API_URL
-const BASE_API_PORT = process.env.REACT_APP_BASE_API_PORT
+console.log(API_BASE_URL)
+console.log(process.env)
 
 const DEFAULT_INIT = {
     headers: {'Content-Type': 'application/json'},
@@ -8,13 +9,11 @@ const DEFAULT_INIT = {
 }
 
 export const login = async (username, password) => {
-    try {
-        const res = await fetch(``, {
-            body: JSON.stringify({Username: username, Password: password}),
-            method: 'POST',
-            ...DEFAULT_INIT,
-        })
-        const data = res.json()
-        return {data, status: res.status}
-    } catch(e) {}
+    const res = await fetch(`${API_BASE_URL}/login`, {
+        body: JSON.stringify({Username: username, Password: password}),
+        method: 'POST',
+        ...DEFAULT_INIT,
+    })
+    const data = await res.json()       
+    return {data, status: res.status}    
 }

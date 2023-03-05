@@ -8,9 +8,13 @@ const LoginPage = () => {
 
     const [loginResponse, setLoginResponse] = useState(null)
     
-    const handleSubmit = (username, password) => {
-        const {data, status} = login(username, password)         
-        setLoginResponse({msg: data.Msg, severity: status === 200 ? 'success' : 'error'})
+    const handleSubmit = async (username, password) => {
+        try {   
+            const {data, status} = await login(username, password)
+            setLoginResponse({msg: data.Msg, severity: status === 200 ? 'success' : 'error'})
+        } catch(e) {
+            console.error(e)
+        }        
     }
 
     return (
