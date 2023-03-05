@@ -1,11 +1,12 @@
-import { useCallback, useState } from 'react'
-
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
+import PropTypes from 'prop-types'
+
 
 // @todo pass onSubmit handler as prop for greater extensibility
-const LoginForm = () => {
+const LoginForm = ({onSubmit}) => {
 
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
@@ -19,11 +20,6 @@ const LoginForm = () => {
 
     // add some flair w/ spinner if time
 
-    const handleSubmit = useCallback(async () => {
-        alert('Hook me up to something cool!')
-        const res = await fetch('')
-    })
-
     return (
         <Box
             component="form"
@@ -31,16 +27,14 @@ const LoginForm = () => {
             sx={{               
                 display: 'flex',
                 flexWrap: 'wrap',
-                justifyContent: 'center',
-                padding: 5,
-                width: 400,
+                justifyContent: 'center',                            
                 '& .MuiTextField-root': {
                     flexBasis: '70%',
-                    m: 2,
+                    m: '15px 0'
                 },
                 '& .MuiButtonBase-root': {
-                    flexBasis: '35%',
-                    m: 2
+                    flexBasis: '30%',
+                    m: 1
                 }
             }}
         >
@@ -53,16 +47,21 @@ const LoginForm = () => {
                 label="password" 
                 required
                 onChange={e => setPassword(e.target.value)}
+                type="password"
             />
             <Button
                 disabled={!username || !password}
                 variant="contained" 
-                onClick={handleSubmit}              
+                onClick={() => onSubmit(username, password)}            
             >
                 Login
             </Button>
         </Box> 
     )
+}
+
+LoginForm.propTypes = {
+    onSubmit: PropTypes.func.isRequired
 }
 
 export default LoginForm
