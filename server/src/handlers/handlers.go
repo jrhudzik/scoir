@@ -10,12 +10,14 @@ import (
 
 const applicationJSON = "application/json"
 
-// user lookup map - maybe replace with memstore for exercise ( time permitting )
+// user lookup map ( standin for persitent storage )
 var users = make(map[string]*models.User)
 
 func init() {
 	// passwords not stored in plaintext in real world! bcrypt to the rescue
 	users["jhudzik"] = models.NewUser("jhudzik", "changeme123", "green")
+	users["aowen"] = models.NewUser("aowen", "scoir", "orange")
+	users["sbeyers"] = models.NewUser("sbeyers", "drowssap", "yellow")
 }
 
 func Authenticate(w http.ResponseWriter, req *http.Request) {

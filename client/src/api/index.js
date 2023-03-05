@@ -1,8 +1,5 @@
 const API_BASE_URL = 'http://localhost:8000'
 
-console.log(API_BASE_URL)
-console.log(process.env)
-
 const DEFAULT_INIT = {
     headers: {'Content-Type': 'application/json'},
     mode: 'cors'

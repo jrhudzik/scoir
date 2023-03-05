@@ -33,7 +33,7 @@ const LoginPage = () => {
                     severity={loginResponse.severity} 
                     sx={{
                         margin: '25px auto', 
-                        width: 'calc(70% - 16px)'
+                        width: '66%'
                     }}
                 >
                     {loginResponse.msg}

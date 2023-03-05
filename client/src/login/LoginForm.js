@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
+import {Button, Box, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField} from '@mui/material'
+import {Visibility, VisibilityOff} from '@mui/icons-material'
 import PropTypes from 'prop-types'
 
 
@@ -10,15 +9,17 @@ const LoginForm = ({onSubmit}) => {
 
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
+    const [showPassword, setShowPassword] = useState(false)
 
     // do something with errors
     // e.g. error={password.length && password.length < 5}
     // const [errors, setErrors] = useState([])
 
-    // maybe add a show password input
-    // https://mui.com/material-ui/react-text-field/
-
     // add some flair w/ spinner if time
+
+    const handleShowPassword = () => {
+        setShowPassword(!showPassword)
+    }
 
     return (
         <Box
@@ -28,7 +29,7 @@ const LoginForm = ({onSubmit}) => {
                 display: 'flex',
                 flexWrap: 'wrap',
                 justifyContent: 'center',                            
-                '& .MuiTextField-root': {
+                '& .MuiTextField-root, & .MuiFormControl-root': {
                     flexBasis: '70%',
                     m: '15px 0'
                 },
@@ -39,16 +40,33 @@ const LoginForm = ({onSubmit}) => {
             }}
         >
             <TextField 
-                label="username"
+                label="Username"
                 required
                 onChange={e => setUsername(e.target.value)} 
-            />
-            <TextField                
-                label="password" 
-                required
-                onChange={e => setPassword(e.target.value)}
-                type="password"
-            />
+            />           
+            <FormControl 
+                required                
+            >
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <OutlinedInput
+                    id="password"
+                    label="Password"
+                    onChange={e => setPassword(e.target.value)}              
+                    type={showPassword ? 'text' : 'password'}
+                    endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleShowPassword}
+                                edge="end"
+                            >
+                                {showPassword ? <VisibilityOff /> : <Visibility/>}
+                            </IconButton>
+                        </InputAdornment>
+                    }
+                    
+                />  
+            </FormControl>
             <Button
                 disabled={!username || !password}
                 variant="contained" 
