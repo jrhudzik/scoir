@@ -8,11 +8,6 @@ import (
 	"github.com/rs/cors"
 )
 
-// do some basic setup
-func init() {
-
-}
-
 func main() {
 	mux := http.NewServeMux()
 	mux.Handle("/login", http.HandlerFunc(handlers.Authenticate))
