@@ -48,6 +48,6 @@ func TestAuthenticate(t *testing.T) {
 	got = resp.StatusCode
 	expected = 400
 	if got != expected {
-		t.Errorf("Invalid Creds Test Fail: got %d, expected %d", got, expected)
+		t.Errorf("Bad Request Test Fail: got %d, expected %d", got, expected)
 	}
 }
