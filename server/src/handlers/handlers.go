@@ -10,7 +10,7 @@ import (
 
 const applicationJSON = "application/json"
 
-// user lookup map ( standin for persitent storage )
+// user lookup map
 var users = make(map[string]*models.User)
 
 func init() {
@@ -25,6 +25,9 @@ func Authenticate(w http.ResponseWriter, req *http.Request) {
 
 	value, err := decodeJSONBody(req, &models.Credentials{})
 	if err != nil {
+		// this block could hit for a number of reasons including malformed request body and
+		// in a production application would make sense to break this down instead of using
+		// a 500 "catch all"
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
