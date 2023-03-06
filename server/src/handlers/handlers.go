@@ -62,6 +62,7 @@ func Authenticate(w http.ResponseWriter, req *http.Request) {
 	})
 }
 
+// Util function to decode json into structs
 func decodeJSONBody(req *http.Request, value interface{}) (interface{}, error) {
 	contentType := req.Header.Get("Content-Type")
 	if contentType != applicationJSON {
